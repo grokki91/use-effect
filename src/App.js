@@ -6,6 +6,7 @@ import Details from './components/Details';
 function App() {
   const [users, setUsers] = useState([]);
   const [user, setUser] = useState();
+  const [id, setId] = useState();
   const [isLoading, setLoading] = useState(true)
   const url = 'https://raw.githubusercontent.com/netology-code/ra16-homeworks/master/hooks-context/use-effect/data/';
 
@@ -20,25 +21,14 @@ function App() {
     })
   }
 
-  const getInfoByUser = () => {
-      if (user) {
-        console.log(user, ' === user');
-        const postUser = {
-          id : user.id,
-          name: user.name
+  const getInfoByUser = async () => {
+    console.log(id);
+      if (id) {
+        const response = await fetch(`${url}${id}.json`);
+        if (response.ok) {
+          const json = await response.json()
+          setUser(json)
         }
-  
-        const options = {
-          method: 'POST',
-          headers: {'Content-type': 'application/json'},
-          host: 'http://localhost:3000/',
-          origin: 'https://raw.githubusercontent.com/',
-          body: JSON.stringify(postUser)
-        }
-  
-        fetch(`${url}${user.id}.json`, options).then(response => {
-          response.json()
-        })
       }
   }
 
@@ -47,7 +37,8 @@ function App() {
 
     users.filter(el => {
       if (el.name === currentUser) {
-        setUser(el);
+        setId(el.id);
+        getInfoByUser()
       }
     })
 }
@@ -55,7 +46,7 @@ function App() {
   return (
     <div className="App">
       {isLoading ? <div>Loading...</div> : <List users={users} click={getUserHandle}/>}
-      {user ? <Details info={getInfoByUser} user={user}/> : ''}
+      {user ? <Details info={user} /> : ''}
     </div>
   );
 }

@@ -1,18 +1,18 @@
 import React from 'react';
 
-const Details = ({info, user}) => {
-    if (user) {
-        info();
-        return (
-            <div>
-                <div><img src={user.avatar} alt=''/></div>
-                <div>{user.name}</div>
-                <div>{user.details?.city}</div>
-                <div>{user.details?.company}</div>
-                <div>{user.details?.position}</div>
-            </div>
-        );
-    }
+const Details = ({info}) => {    
+    const addStyleInfo = () => info ? 'info' : ''
+
+    return (
+        <div>
+            <div><img src={info.avatar} alt=''/></div>
+            <div className={addStyleInfo()}>{info.name}</div>
+            <div className={addStyleInfo()}>{info.details?.city}</div>
+            <div className={addStyleInfo()}>{info.details?.company}</div>
+            <div className={addStyleInfo()}>{info.details?.position}</div>
+        </div>
+    );
+
 }
 
 export default Details;

@@ -19,3 +19,12 @@
 .list-item:hover {
     background: #7764df;
 }
+
+.info {
+    padding: 5px 10px;
+    border: 1px solid #000;
+}
+
+img {
+    display: block;
+}
